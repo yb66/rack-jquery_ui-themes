@@ -5,7 +5,7 @@
 ### Build status ###
 
 Master branch:
-[![Build Status](https://secure.travis-ci.org/yb66/rack-jquery_ui-themes.png?branch=master)](http://travis-ci.org/yb66/rack-jquery_ui-themes)
+[![Build Status](https://travis-ci.org/yb66/rack-jquery_ui-themes.png?branch=master)](https://travis-ci.org/yb66/rack-jquery_ui-themes)
 
 ## Why? ##
 
