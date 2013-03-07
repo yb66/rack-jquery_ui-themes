@@ -5,10 +5,10 @@ require 'rack/jquery_ui/themes/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "rack-jquery_ui-themes"
-  spec.version       = Rack::JQueryUI::VERSION
+  spec.version       = Rack::JQueryUI::Themes::VERSION
   spec.authors       = ["Iain Barnett"]
   spec.email         = ["iainspeed@gmail.com"]
-  spec.description   = %q{jQuery-UI themes CDN script tags and fallback in one neat package. Current version is for jQuery-UI v#{Rack::JQueryUI::JQUERY_UI_VERSION}}
+  spec.description   = %q{jQuery-UI themes CDN script tags and fallback in one neat package. Current version is for jQuery-UI v#{Rack::JQueryUI::Themes::JQUERY_UI_VERSION}}
   spec.summary       = %q{The description says it all.}
   spec.homepage      = "https://github.com/yb66/rack-jquery_ui-themes"
   spec.license       = "MIT"
