@@ -1,5 +1,9 @@
 # CH CH CHANGES #
 
-## Upcoming release ##
+## v0.0.1 ##
+
+Friday the 8th of March 2013
+
+* First release. Handles CDN for jQuery-UI themes, and provides a fallback to local CSS and image files.
 
 ----
