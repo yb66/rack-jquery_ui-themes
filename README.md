@@ -38,7 +38,7 @@ Have a look in the examples directory, but here's a snippet.
 
 Now you have the script tags to Google's CDN in the head (you can also use Media Temple or Microsoft, see the docs).
 
-It also adds in a bit of javascript that will load in a locally kept version of jQuery, just incase the CDN is unreachable. The script will use the "/js/jquery-ui/1.10.1/themes/:THEME/jquery-ui.min.css" path (or, instead of 1.10.1, whatever is in {Rack::JQueryUI::Themes::JQUERY_UI_VERSION}), where `:THEME` is the name of the theme you specified, the default being `base`.
+It also adds in a bit of javascript that will load in a locally kept version of jQuery, just incase the CDN is unreachable. The script will use the "/js/jquery-ui/1.10.1/themes/:THEME/jquery-ui.min.css" path (or, instead of 1.10.1, whatever is in {Rack::JQueryUI::JQUERY_UI_VERSION}), where `:THEME` is the name of the theme you specified, the default being `base`.
 
 That was easy.
 
@@ -48,7 +48,7 @@ You have to have loaded jQuery _before_ using the CDN helper, as Rack::jQueryUI:
 
 ## Version numbers ##
 
-This library uses [semver](http://semver.org/) to version the **library**. That means the library version is ***not*** an indicator of quality but a way to manage changes. The version of jQuery-UI can be found in the lib/rack/jquery_ui/themes/version.rb file, or via the {Rack::JQueryUI::Themes::JQUERY_UI_VERSION} constant.
+This library uses [semver](http://semver.org/) to version the **library**. That means the library version is ***not*** an indicator of quality but a way to manage changes. The version of jQuery-UI can be found in the lib/rack/jquery_ui/themes/version.rb file, or via the {Rack::JQueryUI::JQUERY_UI_VERSION} constant.
 
 ## Installation
 
