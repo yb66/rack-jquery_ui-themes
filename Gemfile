@@ -20,7 +20,6 @@ end
 group :development do
   gem "wirble"
   gem "pry"
-  gem "pry-debugger"
   gem "yard"
   gem "maruku"
 end
