@@ -128,9 +128,9 @@ STR
                 (img = @images.find{|img| img == fin })
             # serve images
             requested_file = open ::File.join( @path_to_images, img), "rb"
-          else
-            # fail(404, "File not found: #{path_info}")
+          else # bad route
             response.status = 404
+            return response.finish # finish early, 404
           end
           if request.env['HTTP_IF_MODIFIED_SINCE']
             response.status = 304

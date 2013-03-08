@@ -107,6 +107,14 @@ describe "Serving the fallback jquery" do
   include_context "All routes"
   let(:theme) { {:theme => "vader"} }
   context "Single request" do
+    context "for route that doesn't exist" do
+      let(:url) { "/js/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/blah/#{Rack::JQueryUI::Themes::JQUERY_UI_THEME_FILE}"}
+      before do
+        get url
+      end
+      subject { last_response.status }
+      it { should == 404 }
+    end
     context "for CSS" do
       let(:url) { subber "/js/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/#{Rack::JQueryUI::Themes::JQUERY_UI_THEME_FILE}", theme }
       before do
