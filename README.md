@@ -50,11 +50,6 @@ You have to have loaded jQuery _before_ using the CDN helper, as Rack::jQueryUI:
 
 This library uses [semver](http://semver.org/) to version the **library**. That means the library version is ***not*** an indicator of quality but a way to manage changes. The version of jQuery-UI can be found in the lib/rack/jquery_ui/themes/version.rb file, or via the {Rack::JQueryUI::Themes::JQUERY_UI_VERSION} constant.
 
-## TODO ##
-
-* Fallback paths for the image files.
-* Changing the path of the fallback.
-
 ## Installation
 
 Add this line to your application's Gemfile:
