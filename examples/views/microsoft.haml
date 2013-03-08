@@ -1,0 +1,6 @@
+%html
+  %head
+    = Rack::JQuery.cdn( :microsoft )
+    = Rack::JQueryUI.cdn( :microsoft )
+    = Rack::JQueryUI::Themes.cdn(:microsoft)
+  = yield

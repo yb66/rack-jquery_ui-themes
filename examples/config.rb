@@ -27,63 +27,13 @@ class App < Sinatra::Base
     haml :index, :layout => :microsoft
   end
 
-  get "/vader" do
-    haml :vader, :layout => :layout_vader
+  get "/themes" do
+    haml :themes_list, :layout => :unspecified
   end
 end
 
-__END__
-
-@@google
-%html
-  %head
-    = Rack::JQuery.cdn( :google )
-    = Rack::JQueryUI.cdn( :google )
-    = Rack::JQueryUI::Themes.cdn(:google)
-  = yield
-
-@@microsoft
-%html
-  %head
-    = Rack::JQuery.cdn( :microsoft )
-    = Rack::JQueryUI.cdn( :microsoft )
-    = Rack::JQueryUI::Themes.cdn(:microsoft)
-  = yield
-
-@@mediatemple
-%html
-  %head
-    = Rack::JQuery.cdn( :media_temple )
-    = Rack::JQueryUI.cdn( :media_temple )
-    = Rack::JQueryUI::Themes.cdn(:media_temple)
-  = yield
-
-@@unspecified
-%html
-  %head
-    = Rack::JQuery.cdn()
-    = Rack::JQueryUI.cdn()
-    = Rack::JQueryUI::Themes.cdn()
-  = yield
-
-@@index
-
-%p
-  %a{ href: "/google-cdn" }
-    google-cdn
-
-%p
-  %a{ href: "/microsoft-cdn" }
-    microsoft-cdn
-
-%p
-  %a{ href: "/media-temple-cdn" }
-    media-temple-cdn
-
-%p
-  %a{ href: "/" }
-    unspecified
-
-%p
-  %a{ href: "/vader" }
-    vader
+class ThemeApp < Sinatra::Base
+  get "/" do
+    haml :theme, :layout => :layout_theme
+  end
+end
