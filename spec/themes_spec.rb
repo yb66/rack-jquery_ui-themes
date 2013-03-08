@@ -106,24 +106,46 @@ require 'time'
 describe "Serving the fallback jquery" do
   include_context "All routes"
   let(:theme) { {:theme => "vader"} }
-  let(:url) { subber "/js/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/#{Rack::JQueryUI::Themes::JQUERY_UI_THEME_FILE}", theme }
-  before do
-    get url
+  context "Single request" do
+    context "for CSS" do
+      let(:url) { subber "/js/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/#{Rack::JQueryUI::Themes::JQUERY_UI_THEME_FILE}", theme }
+      before do
+        get url
+      end
+      it_should_behave_like "Any route"
+      subject { last_response.body }
+      it { should start_with "/*! jQuery UI - v#{Rack::JQueryUI::JQUERY_UI_VERSION}" }
+    end
+    context "for an image" do
+      ex_path = File.expand_path "../../vendor/assets/javascripts/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/base/images", __FILE__
+      img = Dir.new( ex_path ).entries.find{|f| f =~ /\.png$/ }
+      let(:url) {  "/js/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/base/images/#{img}" }
+      before do
+        get url
+      end
+      it_should_behave_like "Any route"
+      subject { last_response.body }
+      it { should_not be_nil }
+    end
   end
-  it_should_behave_like "Any route"
-  subject { last_response.body }
-  it { should start_with "/*! jQuery UI - v#{Rack::JQueryUI::JQUERY_UI_VERSION}" }
-
   context "Re requests" do
     before do
       at_start = Time.parse(Rack::JQueryUI::JQUERY_UI_VERSION_DATE) + 60 * 60 * 24 * 180
       Timecop.freeze at_start
-      get "/js/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/#{Rack::JQueryUI::Themes::JQUERY_UI_THEME_FILE}"
+      get url
       Timecop.travel Time.now + 86400 # add a day
       get url, {}, {"HTTP_IF_MODIFIED_SINCE" => Rack::Utils.rfc2109(at_start) }
     end
     subject { last_response }
-    its(:status) { should == 304 }
-    
+    context "for CSS" do
+      let(:url) { subber "/js/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/#{Rack::JQueryUI::Themes::JQUERY_UI_THEME_FILE}", theme }
+      its(:status) { should == 304 }
+    end
+    context "for an image" do
+      ex_path = File.expand_path "../../vendor/assets/javascripts/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/base/images", __FILE__
+      img = Dir.new( ex_path ).entries.find{|f| f =~ /\.png$/ }
+      let(:url) {  "/js/jquery-ui/#{Rack::JQueryUI::JQUERY_UI_VERSION}/themes/base/images/#{img}" }
+      its(:status) { should == 304 }
+    end
   end
 end
