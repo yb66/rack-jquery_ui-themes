@@ -42,24 +42,24 @@ __END__
 %html
   %head
     = Rack::JQuery.cdn( :google )
-    = Rack::JQueryUI.cdn( :organisation => :google )
-    = Rack::JQueryUI::Themes.cdn(:organisation => :google)
+    = Rack::JQueryUI.cdn( :google )
+    = Rack::JQueryUI::Themes.cdn(:google)
   = yield
 
 @@microsoft
 %html
   %head
     = Rack::JQuery.cdn( :microsoft )
-    = Rack::JQueryUI.cdn( :organisation => :microsoft )
-    = Rack::JQueryUI::Themes.cdn(:organisation => :microsoft)
+    = Rack::JQueryUI.cdn( :microsoft )
+    = Rack::JQueryUI::Themes.cdn(:microsoft)
   = yield
 
 @@mediatemple
 %html
   %head
     = Rack::JQuery.cdn( :media_temple )
-    = Rack::JQueryUI.cdn( :organisation => :media_temple )
-    = Rack::JQueryUI::Themes.cdn(:organisation => :media_temple)
+    = Rack::JQueryUI.cdn( :media_temple )
+    = Rack::JQueryUI::Themes.cdn(:media_temple)
   = yield
 
 @@unspecified
