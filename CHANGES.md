@@ -4,6 +4,14 @@
 
 Friday the 8th of March 2013
 
+* Updated docs again.
+
+----
+
+## v0.0.2 ##
+
+Friday the 8th of March 2013
+
 * Updated docs.
 
 ----
