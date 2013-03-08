@@ -27,7 +27,7 @@ Rack::JQueryUI::Theme doesn't sound right to me, as it's accessing the _Themes_ 
 Have a look in the examples directory, but here's a snippet.
 
 * Install it (see below)
-* `require 'rack/jquery_ui'`.
+* `require 'rack/jquery_ui/themes'`.
 * Put this in your middleware stack: `use Rack::JQuery::Themes, :theme => "vader"`
 * Put this in the head of your layout (the example is Haml but you can use whatever you like)
 
