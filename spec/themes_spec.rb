@@ -90,7 +90,7 @@ describe "Inserting the CDN" do
   end
   context "Unspecified CDN" do
     before do
-      get "/unspecified-cdn"
+      get "/"
     end
     it_should_behave_like "Any route"
     subject { last_response.body }
