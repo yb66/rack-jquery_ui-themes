@@ -12,7 +12,7 @@ class App < Sinatra::Base
   use Rack::JQueryUI::Themes, :theme => "vader"
 
   get "/" do
-    "RUNNING"
+    haml :index, :layout => :unspecified
   end
 
   get "/google-cdn" do
@@ -27,12 +27,8 @@ class App < Sinatra::Base
     haml :index, :layout => :microsoft
   end
 
-  get "/unspecified-cdn" do
-    haml :index, :layout => :unspecified
-  end
-
-  get "/example" do
-    haml :example, :layout => :layout_example
+  get "/vader" do
+    haml :vader, :layout => :layout_vader
   end
 end
 
@@ -72,17 +68,22 @@ __END__
 
 @@index
 
-%p.aclass
-  "NOTHING TO SEE HERE… "
-%p.aclass
-  "MOVE ALONG… "
-%p.aclass
-  "MOVE ALONG… "
-#placeholder
-:javascript
-  all_text = $('.aclass').text();
-  $('#placeholder').text(all_text + " (draggable!)").mouseover(function() {
-    $(this).css({ 'color': 'red', 'font-size': '150%' });    
-  }).mouseout(function() {
-    $(this).css({ 'color': 'blue', 'font-size': '100%' });
-  }).draggable();
+%p
+  %a{ href: "/google-cdn" }
+    google-cdn
+
+%p
+  %a{ href: "/microsoft-cdn" }
+    microsoft-cdn
+
+%p
+  %a{ href: "/media-temple-cdn" }
+    media-temple-cdn
+
+%p
+  %a{ href: "/" }
+    unspecified
+
+%p
+  %a{ href: "/vader" }
+    vader
