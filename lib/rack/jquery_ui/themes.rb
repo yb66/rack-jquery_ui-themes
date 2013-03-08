@@ -84,10 +84,15 @@ STR
     def initialize( app, options={} )
       @app, @options  = app, DEFAULT_APP_OPTIONS.merge(options)
       self.class.theme = options[:theme] unless options[:theme].nil?
-      @http_path_to_jquery = ::File.join(
+      @http_path_to_jquery_css = ::File.join(
         @options[:http_path],        
         self.class.theme,
         JQUERY_UI_THEME_FILE
+      )
+      @http_path_to_jquery_images = ::File.join(
+        @options[:http_path],        
+        self.class.theme,
+        "images"
       )
     end
 
@@ -99,17 +104,24 @@ STR
       # TODO path for images
 
       # path for CSS
-      if request.path_info == @http_path_to_jquery
+      if request.path_info.start_with? @options[:http_path]
         response = Rack::Response.new
-        # for caching
-        response.headers.merge! caching_headers("#{JQUERY_UI_THEME_FILE}-#{self.class.theme}-#{JQueryUI::JQUERY_UI_VERSION}", JQueryUI::JQUERY_UI_VERSION_DATE)
-
-        # There's no need to test if the IF_MODIFIED_SINCE against the release date because the header will only be passed if the file was previously accessed by the requester, and the file is never updated. If it is updated then it is accessed by a different path.
-        if request.env['HTTP_IF_MODIFIED_SINCE']
-          response.status = 304
+        if request.path_info.end_with? ::File.join(self.class.theme,
+        "images")
+          # serve images
+        elsif request.path_info.end_with? ::File.join(self.class.theme,JQUERY_UI_THEME_FILE)
+          # serve CSS
+          # for caching
+          response.headers.merge! caching_headers("#{JQUERY_UI_THEME_FILE}-#{self.class.theme}-#{JQueryUI::JQUERY_UI_VERSION}", JQueryUI::JQUERY_UI_VERSION_DATE)
+          # There's no need to test if the IF_MODIFIED_SINCE against the release date because the header will only be passed if the file was previously accessed by the requester, and the file is never updated. If it is updated then it is accessed by a different path.
+          if request.env['HTTP_IF_MODIFIED_SINCE']
+            response.status = 304
+          else
+            response.status = 200
+            response.write ::File.read( ::File.expand_path "../../../../vendor/assets/javascripts/jquery-ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/#{self.class.theme}/#{JQUERY_UI_THEME_FILE}", __FILE__)
+          end
         else
-          response.status = 200
-          response.write ::File.read( ::File.expand_path "../../../../vendor/assets/javascripts/jquery-ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/#{self.class.theme}/#{JQUERY_UI_THEME_FILE}", __FILE__)
+          response.status = 404
         end
         response.finish
       else
