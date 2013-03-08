@@ -3,8 +3,9 @@ require "rack/jquery/helpers"
 
 module Rack
 
-  # jQuery CDN script tags and fallback in one neat package.
   class JQueryUI
+  
+    # jQuery-UI themes' CDN script tags and fallback in one neat package.
     class Themes
       include JQuery::Helpers
   
@@ -74,13 +75,12 @@ STR
   
       # @param [#call] app
       # @param [Hash] options
-      # @option options [String] :http_path If you wish the jQuery fallback route to be "/js/jquery-ui/1.10.1/jquery-ui.min.js" (or whichever version this is at) then do nothing, that's the default. If you want the path to be "/assets/javascripts/jquery-ui/1.10.1/jquery-ui.min.js" then pass in `:http_path => "/assets/javascripts/#{Rack::JQueryUI::JQUERY_UI_VERSION}".
+      # @option options [String] theme The theme to use. The default is "base".
+      # @option options [String] :http_path If you wish the jQuery CSS fallback route to be "/js/jquery-ui/1.10.1/base/jquery-ui.min.css" (or whichever version this is at) then do nothing, that's the default. If you want the path to be "/assets/javascripts/jquery-ui/1.10.1/base…" then pass in `:http_path => "/assets/javascripts/#{Rack::JQueryUI::JQUERY_UI_VERSION}".
       # @note ***Don't leave out the version number!***. The scripts provided by jQuery don't contain the version in the filename like the jQuery scripts do, which means that organising them and sending the right headers back is bound to go wrong unless you put the version number somewhere in the route. You have been warned!
       # @example
       #   # The default:
-      #   use Rack::JQueryUI
-      #   # With a different route to the fallback:
-      #   use Rack::JQueryUI, :http_path => "/assets/js/#{Rack::JQueryUI::JQUERY_UI_VERSION}"
+      #   use Rack::JQueryUI::Themes
       def initialize( app, options={} )
         @app, @options  = app, DEFAULT_APP_OPTIONS.merge(options)
         self.class.theme = options[:theme] unless options[:theme].nil?
