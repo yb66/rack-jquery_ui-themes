@@ -1,6 +1,14 @@
 # CH CH CHANGES #
 
-## v0.0.2 ##
+## v0.1.0 ##
+
+Friday the 22nd of March 2013
+
+* Made call thread safe by duplicating `call` method.
+
+----
+
+## v0.0.3 ##
 
 Friday the 8th of March 2013
 
