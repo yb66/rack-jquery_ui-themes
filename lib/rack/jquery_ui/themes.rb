@@ -106,9 +106,16 @@ STR
           Rack::Mime.mime_type(::File.extname(f), "text/css" ).start_with? "image" 
         }
       end
-  
-  
+
+
       # @param [Hash] env Rack request environment hash.
+      def call( env )
+        dup._call env
+      end
+  
+  
+      # For thread safety
+      # @param (see #call)
       def call( env )
         request = Rack::Request.new(env.dup)
   
