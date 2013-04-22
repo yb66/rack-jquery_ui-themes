@@ -116,7 +116,7 @@ STR
   
       # For thread safety
       # @param (see #call)
-      def call( env )
+      def _call( env )
         request = Rack::Request.new(env.dup)
   
         # TODO path for images
