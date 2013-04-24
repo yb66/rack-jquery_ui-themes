@@ -1,5 +1,14 @@
 # CH CH CHANGES #
 
+## v0.1.1 ##
+
+Wednesday the 24th of April 2013
+
+* Fixed clobbering of extra call method.
+
+____
+
+
 ## v0.1.0 ##
 
 Friday the 22nd of March 2013
