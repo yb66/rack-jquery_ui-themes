@@ -9,6 +9,7 @@ module Rack
         warn "The JQUERY_UI_VERSION defined is #{JQUERY_UI_VERSION} but the version this library wants to use is #{jquery_ui_version}. You have been warned!"
       end
     else
+      # version of jQuery UI script
       JQUERY_UI_VERSION = jquery_ui_version
 
       # This is the release date of the jQuery file, it makes an easy "Last-Modified" date for setting the headers around caching.
@@ -17,7 +18,8 @@ module Rack
     end
 
     class Themes
-      VERSION = "0.1.1"
+      # version of this library
+      VERSION = "1.0.0"
     end
   end
 end

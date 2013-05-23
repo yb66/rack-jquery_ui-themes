@@ -1,5 +1,15 @@
 # CH CH CHANGES #
 
+## v1.0.0 ##
+
+* Bumped to 1.1.0 for semver.
+* Updated to version 1.10.3 of jQuery UI.
+* 100% documentation coverage.
+* 100% code coverage.
+
+----
+
+
 ## v0.1.1 ##
 
 Wednesday the 24th of April 2013
