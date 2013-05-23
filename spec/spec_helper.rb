@@ -10,6 +10,7 @@ SimpleCov.start do
   add_filter "/vendor/"
   add_filter "/bin/"
   add_filter "/spec/"
+  add_filter "/examples/"
 end
 
 require "rack/test"
