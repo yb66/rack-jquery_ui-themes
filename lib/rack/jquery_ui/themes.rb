@@ -1,14 +1,17 @@
 require "rack/jquery_ui/themes/version"
 require "rack/jquery/helpers"
 
+# @see http://rack.github.io/
 module Rack
 
+  # @see https://github.com/yb66/rack-jquery_ui
   class JQueryUI
   
     # jQuery-UI themes' CDN script tags and fallback in one neat package.
     class Themes
       include JQuery::Helpers
   
+      # The standard CSS file.
       JQUERY_UI_THEME_FILE = "jquery-ui.min.css"
   
       # Script tags for the Media Temple CDN
@@ -34,15 +37,20 @@ $.each(document.styleSheets, function(i,sheet){
 </script>
 STR
   
-  
+      # List of the standard themes provided by jQuery UI.
       STANDARD_THEMES = %w{base black-tie blitzer cupertino dark-hive dot-luv eggplant excite-bike flick hot-sneaks humanity le-frog mint-choc overcast pepper-grinder redmond smoothness south-street start sunny swanky-purse trontastic ui-darkness ui-lightness vader}
   
-  
+
+      # The chosen theme name.
+      # @return [String]
       def self.theme
         @theme ||= "base"
       end
   
-  
+
+      # Set the theme.
+      # @param [String] name Name of the theme.
+      # @return [String]
       def self.theme=( name )
         fail ArgumentError, "That theme (#{name}) is unknown for this version of the rack-jquery_ui-themes library." unless STANDARD_THEMES.include? name
         @theme = name
