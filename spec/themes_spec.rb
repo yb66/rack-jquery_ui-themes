@@ -9,7 +9,8 @@ def subber( s, replacement={} )
 end
 
 shared_examples "Given an organisation and a theme" do
-  it { should == "#{subber cdn, theme}\n#{subber Rack::JQueryUI::Themes::FALLBACK, theme}" }
+  let(:link) { "<link rel='stylesheet' href='#{cdn}' type='text/css' />" }
+  it { should == "#{subber link, theme}\n#{subber Rack::JQueryUI::Themes::FALLBACK, theme}" }
 end
 
 shared_context "Calling the CDN" do
@@ -25,7 +26,7 @@ describe "The class methods" do
     context "of nil (the default)" do
       let(:organisation) { nil }
       let(:theme) { {:theme => nil} }
-      let(:cdn) { Rack::JQueryUI::Themes::GOOGLE }
+      let(:cdn) { Rack::JQueryUI::Themes::CDN::GOOGLE }
       include_examples "Given an organisation and a theme"
       context "Given a theme" do
         let(:theme) { { :theme => Rack::JQueryUI::Themes::STANDARD_THEMES.sample } }
@@ -35,17 +36,17 @@ describe "The class methods" do
     end
     context "of :google" do
       let(:organisation) { :google }
-      let(:cdn) { Rack::JQueryUI::Themes::GOOGLE }
+      let(:cdn) { Rack::JQueryUI::Themes::CDN::GOOGLE }
       include_examples "Given an organisation and a theme"
     end
     context "of :microsoft" do
       let(:organisation) { :microsoft }
-      let(:cdn) { Rack::JQueryUI::Themes::MICROSOFT }
+      let(:cdn) { Rack::JQueryUI::Themes::CDN::MICROSOFT }
       include_examples "Given an organisation and a theme"
     end
     context "of :media_temple" do
       let(:organisation) { :media_temple }
-      let(:cdn) { Rack::JQueryUI::Themes::MEDIA_TEMPLE }
+      let(:cdn) { Rack::JQueryUI::Themes::CDN::MEDIA_TEMPLE }
       include_examples "Given an organisation and a theme"
     end
   end
@@ -67,7 +68,7 @@ describe "Inserting the CDN" do
     end
     it_should_behave_like "Any route"
     subject { last_response.body }
-    let(:cdn) { Rack::JQueryUI::Themes::GOOGLE }
+    let(:cdn) { Rack::JQueryUI::Themes::CDN::GOOGLE }
     it { should include expected }
   end
   context "Microsoft CDN" do
@@ -76,7 +77,7 @@ describe "Inserting the CDN" do
     end
     it_should_behave_like "Any route"
     subject { last_response.body }
-    let(:cdn) { Rack::JQueryUI::Themes::MICROSOFT }
+    let(:cdn) { Rack::JQueryUI::Themes::CDN::MICROSOFT }
     it { should include expected }
   end
   context "Media_temple CDN" do
@@ -85,7 +86,7 @@ describe "Inserting the CDN" do
     end
     it_should_behave_like "Any route"
     subject { last_response.body }
-    let(:cdn) { Rack::JQueryUI::Themes::MEDIA_TEMPLE }
+    let(:cdn) { Rack::JQueryUI::Themes::CDN::MEDIA_TEMPLE }
     it { should include expected }
   end
   context "Unspecified CDN" do
@@ -94,7 +95,7 @@ describe "Inserting the CDN" do
     end
     it_should_behave_like "Any route"
     subject { last_response.body }
-    let(:cdn) { Rack::JQueryUI::Themes::GOOGLE }
+    let(:cdn) { Rack::JQueryUI::Themes::CDN::GOOGLE }
     it { should include expected }
   end
 end
