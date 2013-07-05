@@ -10,19 +10,27 @@ module Rack
     # jQuery-UI themes' CDN script tags and fallback in one neat package.
     class Themes
       include JQuery::Helpers
-  
+
       # The standard CSS file.
       JQUERY_UI_THEME_FILE = "jquery-ui.min.css"
+
+
+      # Namespaced for convenience, to help with checking
+      # which CDN supports what.
+      module CDN
   
-      # Script tags for the Media Temple CDN
-      MEDIA_TEMPLE = "<link rel='stylesheet' href='http://code.jquery.com/ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/jquery-ui.css' type='text/css' />"
-  
-      # Script tags for the Google CDN
-      GOOGLE = "<link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/jquery-ui.css' type='text/css' />"
-  
-      # Script tags for the Microsoft CDN
-      MICROSOFT = "<link rel='stylesheet' href='//ajax.microsoft.com/ajax/jquery.ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/jquery-ui.css' type='text/css' />"
-  
+        # URL for the Media Temple CDN
+        MEDIA_TEMPLE = "http://code.jquery.com/ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/jquery-ui.css"
+    
+        # URL for the Google CDN
+        GOOGLE = "//ajax.googleapis.com/ajax/libs/jqueryui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/jquery-ui.css"
+    
+        # URL for the Microsoft CDN
+        MICROSOFT = "//ajax.microsoft.com/ajax/jquery.ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/jquery-ui.css"
+
+      end
+
+
       # This javascript checks if the jQuery-UI object has loaded. If not, that most likely means the CDN is unreachable, so it uses the local jQuery-UI theme.
       FALLBACK = <<STR
 <script type="text/javascript">
@@ -67,11 +75,11 @@ STR
         theme = opts.fetch :theme, self.theme
         fail ArgumentError, "That theme (#{theme}) is unknown for this version of the rack-jquery_ui-themes library." unless STANDARD_THEMES.include? theme
         script = case organisation
-          when :media_temple then MEDIA_TEMPLE
-          when :microsoft then MICROSOFT
-          else GOOGLE
+          when :media_temple then CDN::MEDIA_TEMPLE
+          when :microsoft then CDN::MICROSOFT
+          else CDN::GOOGLE
         end
-        [script,FALLBACK].map{|x| x.sub(/\:THEME/, theme) }.join("\n")
+        ["<link rel='stylesheet' href='#{script}' type='text/css' />",FALLBACK].map{|x| x.sub(/\:THEME/, theme) }.join("\n")
       end
   
   
