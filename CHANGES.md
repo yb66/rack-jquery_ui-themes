@@ -1,5 +1,12 @@
 # CH CH CH CHANGES #
 
+## Thursday the 18th of July 2013, v2.1.0 ##
+
+* Bumped version of jQuery UI back up to 1.10.3.
+
+----
+
+
 ## Thursday the 18th of July 2013, v2.0.0 ##
 
 * The fallback wasn't working properly, fixed.
