@@ -1,4 +1,17 @@
-# CH CH CHANGES #
+# CH CH CH CHANGES #
+
+## Thursday the 18th of July 2013, v2.0.0 ##
+
+* The fallback wasn't working properly, fixed.
+* Got one of the jQuery team to clarify which parts of the themes download was needed, so updated that.
+* Added new option for selecting several themes.
+* Fixed some bad architectural choices with the code.
+* Downgraded to version 1.10.1 of jQuery UI to get this fixed, and the next release will bump it back up to 1.10.3.
+* Made Media Temple the default CDN, because Google and Microsoft have sided with Satan over all this PRISM/TEMPURA nonsense, and I don't feel like making it easier for them to track people around the web.
+* This is all breaking!!! so the major version has been bumped.
+
+----
+
 
 ## v1.0.0 ##
 
