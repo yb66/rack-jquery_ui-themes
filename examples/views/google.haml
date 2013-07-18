@@ -1,6 +1,8 @@
+!!!
 %html
   %head
     = Rack::JQuery.cdn( :google )
     = Rack::JQueryUI.cdn( :google )
-    = Rack::JQueryUI::Themes.cdn(:google)
+    = Rack::JQueryUI::Themes.cdn(env, :organisation => :google)
+%body
   = yield

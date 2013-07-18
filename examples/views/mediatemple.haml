@@ -1,6 +1,8 @@
+!!!
 %html
   %head
     = Rack::JQuery.cdn( :media_temple )
     = Rack::JQueryUI.cdn( :media_temple )
-    = Rack::JQueryUI::Themes.cdn(:media_temple)
+    = Rack::JQueryUI::Themes.cdn(env, :organisation => :media_temple)
+%body
   = yield

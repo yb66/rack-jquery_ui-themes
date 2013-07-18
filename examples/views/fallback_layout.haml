@@ -1,0 +1,10 @@
+!!!
+%html{:lang => "us"}
+  %head
+    %meta{:charset => "utf-8"}
+      %title jQuery UI Example Page
+    = Rack::JQuery.cdn()
+    = Rack::JQueryUI.cdn(env)
+    = haml :js_and_css_header
+  %body
+    = yield

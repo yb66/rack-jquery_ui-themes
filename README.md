@@ -33,7 +33,7 @@ Have a look in the examples directory, but here's a snippet.
 
     <pre><code>
     %head
-      = Rack::JQueryUI::Themes.cdn :microsoft
+      = Rack::JQueryUI::Themes.cdn env, :organisation => :microsoft
     </code></pre>
 
 Now you have the script tags to Google's CDN in the head (you can also use Media Temple or Microsoft, see the docs).
