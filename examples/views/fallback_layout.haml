@@ -3,13 +3,8 @@
   %head
     %meta{:charset => "utf-8"}
       %title jQuery UI Example Page
-    // load jQuery
     = Rack::JQuery.cdn()
-    // load UI
-    = Rack::JQueryUI.cdn()
-    // load themes
-    = Rack::JQueryUI::Themes.cdn(env)
-    // load js for widgets
+    = Rack::JQueryUI.cdn(env)
     = haml :js_and_css_header
   %body
     = yield

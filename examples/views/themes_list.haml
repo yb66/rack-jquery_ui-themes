@@ -1,3 +1,3 @@
 - Rack::JQueryUI::Themes::STANDARD_THEMES.each do |theme|
   %p
-    %a{ href: "/themes/#{theme}" }= theme
+    %a{ href: "#{File.join '/', request.path_info, theme}" }= theme

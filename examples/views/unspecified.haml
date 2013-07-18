@@ -3,6 +3,6 @@
   %head
     = Rack::JQuery.cdn()
     = Rack::JQueryUI.cdn()
-    = Rack::JQueryUI::Themes.cdn()
+    = Rack::JQueryUI::Themes.cdn(env)
 %body
   = yield
