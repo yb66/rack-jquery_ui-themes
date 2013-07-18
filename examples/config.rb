@@ -27,7 +27,7 @@ class App < Sinatra::Base
     haml :index, :layout => :microsoft
   end
 
-  get "/themes" do
+  get "/themes/?" do
     haml :themes_list, :layout => :unspecified
   end
 end
