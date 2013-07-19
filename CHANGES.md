@@ -1,5 +1,12 @@
 # CH CH CH CHANGES #
 
+## Friday the 19th of July 2013, v2.1.1 ##
+
+* Removed rogue console logging statement in the fallback javascript.
+
+----
+
+
 ## Thursday the 18th of July 2013, v2.1.0 ##
 
 * Bumped version of jQuery UI back up to 1.10.3.
