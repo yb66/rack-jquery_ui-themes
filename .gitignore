@@ -20,3 +20,4 @@ tmp
 vendor/assets/javascripts/jquery-*.min.js
 vendor/assets/javascripts/jquery-ui/*/jquery-ui.min.js
 downloads/
+examples/public/favicon.ico
