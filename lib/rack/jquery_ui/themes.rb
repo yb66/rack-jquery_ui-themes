@@ -41,7 +41,6 @@ module Rack
       // do nothing
     },
     error: function(xhr,status,error) {
-      console.log("error");
       var link = document.createElement("link");
       link.rel = "stylesheet";     
       link.href = ':FALLBACK_URL';
