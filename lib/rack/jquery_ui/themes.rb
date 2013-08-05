@@ -92,7 +92,7 @@ STR
 
       # @param [Hash] env The rack env hash.
       # @param [Hash] opts
-      # @option opts [#to_sym] organisation Choose which CDN to use, either :media_temple, :microsoft, or :media_temple.
+      # @option opts [#to_sym] :organisation Choose which CDN to use, either :media_temple, :microsoft, or :media_temple.
       # @option opts [#to_s] :theme Theme to use. Won't set any routes or permanent settings, see note.
       # @return [String] The HTML script tags to get the CDN, with a JQuery function that will be called if the CDN fails and sets the fallback path.
       # @example
