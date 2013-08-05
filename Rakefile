@@ -38,6 +38,15 @@ namespace :spec do
 
 end
 
+namespace :examples do
+
+  desc "Run the examples."
+  task :run do
+    exec "bundle exec rackup examples/config.ru"
+  end
+
+end
+
 namespace :cdn do
   require 'open3'
   desc "An availability check, for sanity"
