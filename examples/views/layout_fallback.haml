@@ -8,7 +8,7 @@
     // load UI
     = Rack::JQueryUI.cdn()
     // load themes
-    = Rack::JQueryUI::Themes.cdn(env, :theme => @theme)
+    = Rack::JQueryUI::Themes.cdn(env, :theme => @theme, :fallback => :only)
     // load js for widgets
     = haml :js_and_css_header
   %body

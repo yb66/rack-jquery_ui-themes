@@ -33,67 +33,28 @@ module Rack
 
       # This javascript checks if the jQuery-UI object has loaded by issuing a head request to the CDN. If it doesn't get a successful status, that most likely means the CDN is unreachable, so it uses the local jQuery-UI theme.
       FALLBACK = <<STR
+<meta id='rack-jquery-ui-themes-fallback-beacon' />
+
 <script type="text/javascript">
-  $.ajax({
-    type: "HEAD",
-    url: ':CDNURL',
-    success: function(css,status) {
-      // do nothing
-    },
-    error: function(xhr,status,error) {
-      var link = document.createElement("link");
-      link.rel = "stylesheet";     
-      link.href = ':FALLBACK_URL';
-      document.getElementsByTagName("head")[0].appendChild(link); 
-    }
-  });
+  var meta = $("#rack-jquery-ui-themes-fallback-beacon");
+  meta.addClass("ui-icon");
+  if ( meta.css('width') != "16px" ) {
+    $('<link rel="stylesheet" type="text/css" href="/js/jquery-ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/#{JQUERY_UI_THEME_FILE}" />').appendTo('head');
+  }
+  meta.remove();
 </script>
 STR
 
   
       # List of the standard themes provided by jQuery UI.
       STANDARD_THEMES = %w{black-tie blitzer cupertino dark-hive dot-luv eggplant excite-bike flick hot-sneaks humanity le-frog mint-choc overcast pepper-grinder redmond smoothness south-street start sunny swanky-purse trontastic ui-darkness ui-lightness vader}
-  
-
-      # The chosen theme name.
-      # @return [String]
-      # @see http://blog.jqueryui.com/2013/03/jquery-ui-1-10-2/ for why the default theme was changed to 'smoothness'.
-      def self.theme
-        @theme ||= "smoothness"
-      end
-  
-
-      # Set the theme.
-      # @param [String] name Name of the theme.
-      # @return [String]
-      def self.theme=( name )
-        name = name.to_s
-        fail ArgumentError, "That theme (#{name}) is unknown for this version of the rack-jquery_ui-themes library." unless STANDARD_THEMES.include? name
-        @theme = name
-      end
-
-
-      # Set the themes to use.
-      # @param [Array<String>] themes
-      # @return [Array<String>]
-      # @example
-      #   self.class.themes = ["smoothness", "swanky-purse"]
-      def self.themes=( themes )
-        themes = themes.pop if themes.first.respond_to? :each
-        @themes = themes.map! &:to_s
-      end
-
-      # Get the selected themes
-      # @return [Array<String>]
-      def self.themes
-        @themes ||= Array(self.theme)
-      end
 
 
       # @param [Hash] env The rack env hash.
       # @param [Hash] opts
-      # @option opts [#to_sym] organisation Choose which CDN to use, either :media_temple, :microsoft, or :media_temple.
+      # @option opts [#to_sym] :organisation Choose which CDN to use, either :media_temple, :microsoft, or :media_temple.
       # @option opts [#to_s] :theme Theme to use. Won't set any routes or permanent settings, see note.
+      # @option opts [TrueClass, Symbol] :fallback `true` if you want a fallback script, `false` if you don't, and `:only` if you don't want the CDN link but you do want just the fallback script. `true` is the default.
       # @return [String] The HTML script tags to get the CDN, with a JQuery function that will be called if the CDN fails and sets the fallback path.
       # @example
       #   # The easiest, use the defaults:
@@ -113,8 +74,9 @@ STR
       #   theme is favoured *from the already given set*.
       def self.cdn( env, opts={} )
         organisation = opts[:organisation] || :media_temple
-        themes = env.fetch "rack.jquery_ui-themes", themes()
+        themes = env["rack.jquery_ui-themes"]
         theme, themes = sort_out_options opts.merge :themes => themes
+        fallback = opts[:fallback] || true
 
         # Get the CDN URL for the given organisation.
         url = case organisation.to_sym
@@ -131,11 +93,18 @@ STR
         fallback_script = FALLBACK.gsub(/\:CDNURL/, url)
                                   .sub /\:FALLBACK_URL/, fallback_url
 
-        script    = "<link rel='stylesheet' href='#{url}' type='text/css' />"
-        [script,fallback_script].map{|x|
-          x.gsub(/\:THEME/, theme)
-        }.join("\n")
-        #fallback_script.gsub(/\:THEME/, theme)
+        if fallback == :only
+          fallback_script.gsub(/\:THEME/, theme)
+        else
+          script = "<link rel='stylesheet' href='#{url}' type='text/css' />"
+          if fallback == false
+            script.gsub(/\:THEME/, theme)
+          else
+            [script,fallback_script].map{|x|
+              x.gsub(/\:THEME/, theme)
+            }.join("\n")
+          end
+        end
       end
   
   
@@ -163,7 +132,7 @@ STR
             (t + themes).uniq :
             t
         else
-          themes = self.themes if themes.nil? || themes.empty?
+          themes = ["smoothness"] if themes.nil? || themes.empty?
           theme = themes.first
         end
         
@@ -212,7 +181,10 @@ STR
           # with the file path to the CSS file as the value
           paths.store(
             ::File.join( theme_url, JQUERY_UI_THEME_FILE ),
-            ::File.join( theme_dir, JQUERY_UI_THEME_FILE)
+            {
+              :file => ::File.join( theme_dir, JQUERY_UI_THEME_FILE),
+              :theme => theme
+            }
           )
 
           images_dir = ::File.join theme_dir, "images"
@@ -227,7 +199,10 @@ STR
               }.each do |img|
                 paths.store(
                   ::File.join( theme_url, "images", img ), # url
-                  ::File.join( images_dir, img )           # file
+                  {
+                    :file   =>  ::File.join( images_dir, img ),
+                    :theme  =>  theme
+                  }
                 )
               end
         end
@@ -253,12 +228,12 @@ STR
           response = Rack::Response.new
           if request.path_info.end_with? JQUERY_UI_THEME_FILE # CSS.
             # For caching:
-            response.headers.merge! caching_headers("#{JQUERY_UI_THEME_FILE}-#{self.class.theme}-#{JQueryUI::JQUERY_UI_VERSION}", JQueryUI::JQUERY_UI_VERSION_DATE)
+            response.headers.merge! caching_headers("#{JQUERY_UI_THEME_FILE}-#{@paths[request.path_info][:theme]}-#{JQueryUI::JQUERY_UI_VERSION}", JQueryUI::JQUERY_UI_VERSION_DATE)
             # There's no need to test if the IF_MODIFIED_SINCE against the release date because the header will only be passed if the file was previously accessed by the requester, and the file is never updated. If it is updated then it is accessed by a different path.
-            requested_file = open @paths[request.path_info], "r"
+            requested_file = open @paths[request.path_info][:file], "r"
           elsif request.path_info =~ /images/
             # serve images
-            requested_file = open @paths[request.path_info], "rb"
+            requested_file = open @paths[request.path_info][:file], "rb"
           else # bad route
             response.status = 404
             return response.finish # finish early, 404
