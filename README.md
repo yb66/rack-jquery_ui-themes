@@ -36,9 +36,9 @@ Have a look in the examples directory, but here's a snippet.
       = Rack::JQueryUI::Themes.cdn env, :organisation => :microsoft
     </code></pre>
 
-Now you have the script tags to Google's CDN in the head (you can also use Media Temple or Microsoft, see the docs).
+Now you have the script tags to Microsoft's CDN in the head (you can also use Media Temple or Microsoft, see the docs).
 
-It also adds in a bit of javascript that will load in a locally kept version of jQuery, just incase the CDN is unreachable. The script will use the "/js/jquery-ui/1.10.1/themes/:THEME/jquery-ui.min.css" path (or, instead of 1.10.1, whatever is in {Rack::JQueryUI::JQUERY_UI_VERSION}), where `:THEME` is the name of the theme you specified, the default being `base`.
+It also adds in a bit of javascript that will load in a locally kept version of jQuery, just incase the CDN is unreachable. The script will use the "/js/jquery-ui/1.10.3/themes/:THEME/jquery-ui.min.css" path (or, instead of 1.10.3, whatever is in {Rack::JQueryUI::JQUERY_UI_VERSION}), where `:THEME` is the name of the theme you specified, the default being `smoothness`.
 
 That was easy.
 
