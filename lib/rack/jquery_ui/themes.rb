@@ -33,22 +33,15 @@ module Rack
 
       # This javascript checks if the jQuery-UI object has loaded by issuing a head request to the CDN. If it doesn't get a successful status, that most likely means the CDN is unreachable, so it uses the local jQuery-UI theme.
       FALLBACK = <<STR
+<meta id='rack-jquery-ui-themes-fallback-beacon' />
+
 <script type="text/javascript">
-  var has_jquery_rules = false;
-  var i = document.styleSheets.length - 1;
-  while (i >= 0 ) {
-    var sheet = document.styleSheets[i];
-    if(sheet.href == ":CDNURL/ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/jquery-ui.min.css") {
-      var rules = sheet.rules ? sheet.rules : sheet.cssRules;
-      has_jquery_rules = rules.length == 0 ? false : true;
-      break; // end the loop.
-    }
-    has_jquery_rules = false;
-    i--;
-  }
-  if ( has_jquery_rules == false ) {
+  var meta = $("#rack-jquery-ui-themes-fallback-beacon");
+  meta.addClass("ui-icon");
+  if ( meta.css('width') != "16px" ) {
     $('<link rel="stylesheet" type="text/css" href="/js/jquery-ui/#{JQueryUI::JQUERY_UI_VERSION}/themes/:THEME/#{JQUERY_UI_THEME_FILE}" />').appendTo('head');
   }
+  meta.remove();
 </script>
 STR
 
