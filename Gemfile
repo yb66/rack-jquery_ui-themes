@@ -14,7 +14,8 @@ group :examples do
   gem "sinatra"
   gem "haml"
   gem "rack-jquery"
-  gem "rack-jquery_ui", "2.0.0" # for jQuery UI 1.10.1
+  gem "rack-jquery_ui", "2.2.0" # for jQuery UI 1.10.3
+  gem "thin"
 end
 
 group :development do
