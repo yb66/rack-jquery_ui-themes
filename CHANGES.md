@@ -1,13 +1,14 @@
 # CH CH CH CHANGES #
 
-## Next release ##
+## Tuesday the 6th of August 2013, v3.0.0 ##
 
 * Removed class methods for theme and themes, they just don't work with the Rack architecture, at least not the way I'm using them.
-* Better fallback script than the jQuery one, but still doesn't work because certain browsers block access to externally loaded CSS rules.
+* Found a way to check if the external CDN has loaded, by adding a meta tag and then one of the jQuery UI classes to it, and seeing if it changes.
 * Added some extra keys the internal paths hash to help ascertain which theme is being called.
 * Added a fallback option to the cdn method, mainly to help with testing but also because it might be wanted.
 
 ----
+
 
 ## Friday the 19th of July 2013, v2.1.1 ##
 
