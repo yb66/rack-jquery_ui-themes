@@ -1,5 +1,13 @@
 # CH CH CH CHANGES #
 
+## Tuesday the 18th of August 2015, v3.0.1 ##
+
+* Correct typo in docs.
+* Better git ignores.
+
+----
+
+
 ## Tuesday the 6th of August 2013, v3.0.0 ##
 
 * Removed class methods for theme and themes, they just don't work with the Rack architecture, at least not the way I'm using them.
