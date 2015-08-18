@@ -19,5 +19,9 @@ tmp
 .rspec
 vendor/assets/javascripts/jquery-*.min.js
 vendor/assets/javascripts/jquery-ui/*/jquery-ui.min.js
+vendor.noindex/
 downloads/
 examples/public/favicon.ico
+.DS_Store
+bin/
+docs/
