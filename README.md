@@ -1,5 +1,7 @@
 # Rack::JQueryUI::Themes #
 
+NO LONGER IN DEVELOPMENT, obvs.
+
 [jQuery-UI](http://jqueryui.com/) ***themes*** CDN script tags and fallback in one neat package.
 
 ### Build status ###
